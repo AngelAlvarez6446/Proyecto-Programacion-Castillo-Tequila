@@ -1,10 +1,3 @@
-"""
-Punto de entrada del proyecto.
-
-Ejecutar con:
-    python3 -m src.main
-"""
-
 from .gestor import GestorEncuestasCastillo
 
 SHEET_ID = "1s7WBbLg5wff3R0BGnn-aM9VokQU2C4u60OJ-PIOEExE"
