@@ -1,4 +1,9 @@
+import pandas as pd #para que la matriz de correlación se muestre completa
 from .gestor import GestorEncuestasCastillo
+#============================================
+
+pd.set_option("display.max_columns", None)
+pd.set_option("display.max_rows", None)
 
 SHEET_ID = "1s7WBbLg5wff3R0BGnn-aM9VokQU2C4u60OJ-PIOEExE"
 
