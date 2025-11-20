@@ -2,6 +2,7 @@ import sqlite3
 from pathlib import Path
 from typing import List
 import pandas as pd
+import unicodedata  
 
 from .models import (
     Visitante,
@@ -35,8 +36,31 @@ class GestorEncuestasCastillo:
         """Carga datos desde Google Sheets → CSV"""
         url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
         df = pd.read_csv(url)
+        df["¿De qué País nos visitas?"] = df["¿De qué País nos visitas?"].apply(cls._normalizar_pais)
+        #ese def es para que se imprima correctamente sin repetir letras diferentemente escritas
         visitantes = cls._crear_visitantes(df)
         return cls(df, visitantes, db_path)
+
+    # =================================================
+    # la funcion para normalizar las respuestas de pais  
+    # =================================================
+    @staticmethod
+    def _normalizar_pais(pais: str) -> str:
+        """
+        Normaliza el país:
+        - elimina acentos
+        - convierte a minúsculas
+        - elimina espacios alrededor
+        """
+        if not isinstance(pais, str):
+            return pais
+
+        # eliminar acentos
+        nfkd = unicodedata.normalize("NFKD", pais)
+        sin_acentos = "".join([c for c in nfkd if not unicodedata.combining(c)]) 
+        #Separa caracteres y aplica equivalencia, y porque nfkd? es solo la abreviacion en ingles del modo 
+        #Compatibility Decomposed
+        return sin_acentos.strip().lower()
 
     @staticmethod
     def _crear_visitantes(df: pd.DataFrame) -> List[Visitante]:
@@ -56,7 +80,14 @@ class GestorEncuestasCastillo:
 
             visitante = cls_v(
                 nombre=row.get("Nombre (Opcional)", ""),
-                pais=row["¿De qué País nos visitas?"],
+
+                # =====================================
+                # ** AQUI SE USA LA FUNCIÓN NUEVA **
+                # =====================================
+                pais=GestorEncuestasCastillo._normalizar_pais(
+                    row["¿De qué País nos visitas?"]
+                ),
+
                 edad=int(row["¿Cuántos años tienes?"]),
                 genero=row["¿Con qué género te identificas?"],
                 nos_habias_visitado=row["¿Nos habías visitado anteriormente?"],
