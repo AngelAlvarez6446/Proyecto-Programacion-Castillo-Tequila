@@ -217,30 +217,7 @@ VisitanteOtro -> Hola visitante, tu opinión nos impulsa a mejorar...
 ---
 
 # 7. Diagramas de Flujo del Sistema
-
-(Vincula con docs/diagramas.md)
-``` plaintext
-Inicio
-│
-├─ Leer CSV desde Google Sheets
-│
-├─ ¿Archivo válido?
-│    ├─ No → Terminar
-│    └─ Sí
-│
-├─ Construir objeto Visitante según motivo
-│
-├─ Guardar DataFrame en SQLite
-│
-├─ Analítica de mercado
-├─ Analítica de engagement
-├─ Correlación de opiniones
-│
-├─ Mostrar mensajes follow-up (polimorfismo)
-│
-Fin
-
-```
+![Foto1](Diagrama_de_flujo_programacion.jpeg)
 ---
 
 # 8. Casos de Uso Ejemplificados
