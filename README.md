@@ -78,12 +78,6 @@ Proyecto/
 ├── data/
 │   └── castillo.db                # Base de datos SQLite generada
 │
-├── docs/
-│   ├── problema.pdf                # Descripción formal del problema
-│   ├── diagramas.pdf               # Diagramas de flujo y clases
-│   ├── presentacion.pdf           # Slides del proyecto
-│   └── documentacion.pdf          # Documento final entregable
-│
 ├── requirements.txt               # Dependencias
 └── README.md                      # Este archivo
 
